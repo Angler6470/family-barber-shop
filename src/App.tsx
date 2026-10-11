@@ -72,6 +72,24 @@ const hours = [
   ['Sunday', 'Closed'],
 ]
 
+const galleryPhotos = [
+  {
+    src: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=900&q=85',
+    alt: 'Warmly lit barbershop with classic barber chairs',
+    caption: 'A chair with your name on it',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=85',
+    alt: 'Barber carefully shaping a client’s haircut',
+    caption: 'The craft of a clean cut',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=900&q=85',
+    alt: 'Barber tools ready for a fresh cut',
+    caption: 'The finishing touches',
+  },
+]
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [requestSent, setRequestSent] = useState(false)
@@ -165,11 +183,6 @@ function App() {
         .hero-photo-caption { position: absolute; z-index: 1; right: 24px; bottom: 28px; left: 25px; display: flex; align-items: end; justify-content: space-between; gap: 16px; }
         .hero-photo-caption strong { display: block; font-family: Georgia, "Times New Roman", serif; font-size: 23px; font-weight: 500; }
         .hero-photo-caption span { display: block; margin-top: 5px; color: rgba(255,255,255,.72); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
-        .rating-card { position: absolute; right: -8px; bottom: 0; display: flex; align-items: center; gap: 12px; padding: 15px 18px; border: 1px solid #dedbd4; color: #171719; background: var(--paper); box-shadow: 0 16px 45px rgba(0,0,0,.25); }
-        .rating-card .rating-icon { width: 38px; height: 38px; display: grid; place-items: center; color: #a27a38; border: 1px solid rgba(162,122,56,.32); border-radius: 50%; }
-        .rating-icon svg { width: 18px; height: 18px; }
-        .rating-card strong { display: block; font-size: 13px; }
-        .rating-card span { display: block; margin-top: 3px; color: #696763; font-size: 10px; }
         .scroll-cue { display: inline-flex; align-items: center; gap: 9px; margin-top: 42px; color: #888681; font-size: 9px; font-weight: 750; letter-spacing: .15em; text-transform: uppercase; }
         .scroll-cue svg { width: 14px; height: 14px; }
         .trust-band { border-block: 1px solid var(--line); background: #101012; }
@@ -179,6 +192,17 @@ function App() {
         .trust-item:last-child { justify-content: flex-end; padding-right: 0; border: 0; }
         .trust-item svg { width: 19px; height: 19px; color: #cba368; }
         .trust-item span { color: #e2e0dc; font-size: 11px; font-weight: 700; }
+        .gallery-section { padding: 82px 0 92px; }
+        .gallery-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
+        .gallery-heading h2 { margin: 13px 0 0; color: #f8f7f4; font-family: Georgia, "Times New Roman", serif; font-size: clamp(35px, 4.2vw, 48px); font-weight: 500; letter-spacing: -.045em; line-height: 1.05; }
+        .gallery-heading p { max-width: 340px; margin: 0 0 3px; color: #a9a7a2; font-size: 12px; line-height: 1.7; }
+        .gallery-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 14px; }
+        .gallery-card { min-width: 0; height: 300px; position: relative; overflow: hidden; background: #202022; }
+        .gallery-card::after { position: absolute; inset: 35% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.75)); content: ""; pointer-events: none; }
+        .gallery-card img { width: 100%; height: 100%; display: block; object-fit: cover; filter: saturate(.72) brightness(.82); transition: transform .45s, filter .3s; }
+        .gallery-card:hover img { transform: scale(1.04); filter: saturate(.9) brightness(.9); }
+        .gallery-caption { position: absolute; z-index: 1; right: 18px; bottom: 17px; left: 18px; color: #fff; font-family: Georgia, "Times New Roman", serif; font-size: 18px; }
+        .gallery-caption::before { display: block; width: 22px; height: 2px; margin-bottom: 10px; background: var(--red); content: ""; }
         .section { padding: 100px 0; }
         .section-heading { max-width: 680px; margin-bottom: 42px; }
         .section-kicker { display: inline-flex; align-items: center; gap: 9px; color: #c99682; font-size: 10px; font-weight: 850; letter-spacing: .18em; text-transform: uppercase; }
@@ -327,13 +351,19 @@ function App() {
           .scroll-cue { display: none; }
           .hero-visual { min-height: 380px; }
           .hero-photo { inset: 0 17px 17px 0; }
-          .rating-card { right: 0; }
           .trust-inner { min-height: 76px; grid-template-columns: repeat(3, 1fr); }
           .trust-item { gap: 7px; padding-inline: 8px; }
           .trust-item:first-child { padding-left: 0; }
           .trust-item:last-child { padding-right: 0; }
           .trust-item svg { width: 16px; height: 16px; }
           .trust-item span { font-size: 9px; line-height: 1.35; }
+          .gallery-section { padding: 65px 0 72px; }
+          .gallery-heading { align-items: flex-start; flex-direction: column; gap: 10px; margin-bottom: 23px; }
+          .gallery-heading p { max-width: 440px; }
+          .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+          .gallery-card { height: 220px; }
+          .gallery-card:first-child { grid-column: 1 / -1; height: 260px; }
+          .gallery-caption { right: 12px; bottom: 13px; left: 12px; font-size: 15px; }
           .section { padding: 72px 0; }
           .section-heading { margin-bottom: 30px; }
           .section-heading p, .experience-copy > p, .review-heading > p, .visit-copy > p { font-size: 12px; }
@@ -406,6 +436,7 @@ function App() {
             </a>
             <nav className="desktop-nav" aria-label="Main navigation">
               <a href="#services">Services &amp; Pricing</a>
+              <a href="#gallery">Gallery</a>
               <a href="#alexandra">About Alexandra</a>
               <a href="#reviews">Reviews</a>
               <a href="#visit">Hours &amp; Location</a>
@@ -426,6 +457,7 @@ function App() {
             </div>
             <nav className="mobile-nav" id="mobile-navigation" aria-label="Mobile navigation" hidden={!menuOpen}>
               <a href="#services" onClick={closeMenu}>Services &amp; Pricing</a>
+              <a href="#gallery" onClick={closeMenu}>Gallery</a>
               <a href="#alexandra" onClick={closeMenu}>About Alexandra</a>
               <a href="#reviews" onClick={closeMenu}>Reviews</a>
               <a href="#visit" onClick={closeMenu}>Hours &amp; Location</a>
@@ -469,10 +501,6 @@ function App() {
                   </div>
                 </div>
                 <span className="pole-accent" aria-hidden="true" />
-                <div className="rating-card">
-                  <span className="rating-icon"><Star aria-hidden="true" /></span>
-                  <span><strong>Every cut, personal.</strong><span>Rated 5 stars by the community</span></span>
-                </div>
               </div>
             </div>
           </section>
@@ -484,6 +512,26 @@ function App() {
               <div className="trust-item"><ShieldCheck aria-hidden="true" /><span>Classic Craft, Every Generation</span></div>
             </div>
           </div>
+
+          <section className="gallery-section" id="gallery">
+            <div className="site-container">
+              <div className="gallery-heading">
+                <div>
+                  <span className="section-kicker">A look around the shop</span>
+                  <h2>Good work. Good company.</h2>
+                </div>
+                <p>Classic barbering, thoughtful details, and a welcoming chair for every generation.</p>
+              </div>
+              <div className="gallery-grid">
+                {galleryPhotos.map(({ src, alt, caption }) => (
+                  <figure className="gallery-card" key={src}>
+                    <img src={src} alt={alt} loading="lazy" />
+                    <figcaption className="gallery-caption">{caption}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </section>
 
           <section className="section services-section" id="services">
             <div className="site-container">
